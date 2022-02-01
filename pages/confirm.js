@@ -1,8 +1,28 @@
-import React from 'react';
+import { useEffect } from 'react';
 import tw from "tailwind-styled-components"
 import Map from './components/Map'
 
-const confirm = () => {
+const Confirm = () => {
+
+    const getCoordinates = () => {
+        const location = "Santa Monica";
+        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${location}.json?` +
+            new URLSearchParams({
+                access_token: "pk.eyJ1Ijoic2hhdW52YW4xOTkiLCJhIjoiY2t6MXp0NDNnMXJmMTJubXdrdXhsZGlpdCJ9.uFoPZjNNgH8xWvJb1Hy_sw",
+                limit: 1
+            })
+        )
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+        })
+    }
+
+    useEffect(()=>{
+        getCoordinates();
+
+    }, [])
+
   return (
   
   <Wrapper>
@@ -15,7 +35,7 @@ const confirm = () => {
   )
 }
 
-export default confirm
+export default Confirm
 
 const RideContainer = tw.div`
 flex-1
