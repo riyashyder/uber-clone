@@ -1,11 +1,14 @@
 import React from 'react';
 import tw from "tailwind-styled-components"
+import Link from "next/link"
 
 const search = () => {
   return (
   <Wrapper>
     <ButtonContainer>
+    <Link href="/">
         <BackButton src="https://img.icons8.com/ios-filled/50/000000/left.png"/>
+    </Link>
     </ButtonContainer>
     <InputContainer>
      <FromToIcons>
@@ -23,12 +26,20 @@ const search = () => {
         <StarIcon src="https://img.icons8.com/ios-filled/50/ffffff/star--v1.png"/>
         Saved Places
      </SavedPlaces>
+     <ConfirmButtonContainer>
+         Confirm Locations
+     </ConfirmButtonContainer>
   
   </Wrapper>
   )
 }
 
 export default search;
+
+const ConfirmButtonContainer = tw.div`
+bg-black text-white text-center mt-2 mx-4 px-4 py-3 text-2xl cursor-pointer
+
+`
 
 const Wrapper = tw.div`
 bg-gray-200 h-screen
@@ -39,7 +50,7 @@ bg-white px-4
 `
 
 const BackButton = tw.img`
-h-12
+h-12 cursor-pointer
 `
 
 const InputContainer = tw.div`
@@ -82,4 +93,5 @@ const StarIcon = tw.img`
 bg-gray-400 w-10 h-10 p-2 rounded-full mr-2
 `
 
-console.log("SavedPlaces")
+
+
