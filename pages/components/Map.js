@@ -20,6 +20,22 @@ const Map = (props) => {
     if(props.pickupCoordinates){
         addToMap(map, props.pickupCoordinates)
      }
+
+     if(props.dropoffCoordinates){
+        addToMap(map, props.dropoffCoordinates)
+     }
+
+     if(props.pickupCoordinates && props.dropoffCoordinates){
+         map.fitBounds([
+             props.dropoffCoordinates,
+             props.pickupCoordinates
+         ],{
+             padding: 60
+         })
+     }
+
+
+
     }, [props.pickupCoordinates, props.dropoffCoordinates])
 
     const addToMap = (map, coordinates) =>{
