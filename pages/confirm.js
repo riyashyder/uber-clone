@@ -9,8 +9,8 @@ const Confirm = () => {
     const { pickup, dropoff} = router.query
 
 
-    const [ pickupCoordinates, setPickupCoordinates ] = useState()
-    const [ dropoffCoordinates, setDropoffCoordinates ] = useState()
+    const [ pickupCoordinates, setPickupCoordinates ] = useState([0, 0])
+    const [ dropoffCoordinates, setDropoffCoordinates ] = useState([0, 0])
 
     const getPickupCoordinates = (pickup) => {
         fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${pickup}.json?` +
@@ -49,11 +49,14 @@ const Confirm = () => {
   
   <Wrapper>
      <Map 
-     pickupCoordinates={pickupCoordinates}
-     dropoffCoordinates={dropoffCoordinates}
+         pickupCoordinates={pickupCoordinates}
+         dropoffCoordinates={dropoffCoordinates}
      />
      <RideContainer>
-     <RideSelector/> 
+     <RideSelector
+         pickupCoordinates={pickupCoordinates}
+         dropoffCoordinates={dropoffCoordinates}
+     /> 
        <ConfirmedButtonContainer>
             <ConfirmButton>
                 confirm uberX
