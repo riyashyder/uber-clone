@@ -1,33 +1,34 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react'
 import tw from "tailwind-styled-components"
 import Map from './components/Map'
-import { useRouter } from 'next/router';
-import RideSelector from './components/RideSelector';
+import { useRouter } from 'next/router'
+import RideSelector from './components/RideSelector'
 import Link from 'next/link'
 
 const Confirm = () => {
     const router = useRouter()
-    const { pickup, dropoff} = router.query
-
+    const {pickup, dropoff} = router.query
 
     const [pickupCoordinates, setPickupCoordinates] = useState([0,0])
     const [dropoffCoordinates, setDropoffCoordinates] = useState([0,0])
 
     const getPickupCoordinates = (pickup) => {
-        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${pickup}.json?` +
+        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${pickup}.json?` + 
             new URLSearchParams({
-                access_token: "pk.eyJ1Ijoic2hhdW52YW4xOTkiLCJhIjoiY2t6MXp0NDNnMXJmMTJubXdrdXhsZGlpdCJ9.uFoPZjNNgH8xWvJb1Hy_sw",
+                access_token: "pk.eyJ1IjoiZGVyZWtzYXJnZW50IiwiYSI6ImNrdnNjNGZ6bTAwODMydnA5NGlhdGhqZzQifQ.8ZHb1XyhLk84WdehUiG57w",
                 limit: 1
             })
         )
         .then(response => response.json())
         .then(data => {
+            //console.log("Pickup")
             setPickupCoordinates(data.features[0].center);
         })
     }
 
-    const getDropofCoordinates = (dropoff) => {  
-        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${dropoff}.json?` +
+
+    const getDropoffCoordinates = (dropoff) => {
+        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${dropoff}.json?` + 
             new URLSearchParams({
                 access_token: "pk.eyJ1Ijoic2hhdW52YW4xOTkiLCJhIjoiY2t6MXp0NDNnMXJmMTJubXdrdXhsZGlpdCJ9.uFoPZjNNgH8xWvJb1Hy_sw",
                 limit: 1
@@ -35,69 +36,67 @@ const Confirm = () => {
         )
         .then(response => response.json())
         .then(data => {
+            //console.log("Dropoff")
             setDropoffCoordinates(data.features[0].center);
         })
     }
 
-    useEffect(()=>{
+        useEffect(() => {
         getPickupCoordinates(pickup);
-        getDropofCoordinates(dropoff);
-    }, [pickup, dropoff])
+        getDropoffCoordinates(dropoff);
+    }, [pickup,dropoff])
 
-    
-
-  return (
-  
-  <Wrapper>
-    <ButtonContainer>
+    return (
+        <Wrapper>
+            <ButtonContainer>
                 <Link href="/search">
                 <BackButton src='https://img.icons8.com/ios-filled/50/000000/left.png' />
                 </Link>
 
             </ButtonContainer>
-     <Map 
-         pickupCoordinates={pickupCoordinates}
-         dropoffCoordinates={dropoffCoordinates}
-     />
-     <RideContainer>
-     <RideSelector
-         pickupCoordinates={pickupCoordinates}
-         dropoffCoordinates={dropoffCoordinates}
-     /> 
-       <ConfirmedButtonContainer>
-            <ConfirmButton>
-                confirm uberX
-            </ConfirmButton>
-        </ConfirmedButtonContainer>
-     </RideContainer>
-  </Wrapper>
-  )
+            <Map 
+                pickupCoordinates={pickupCoordinates}
+                dropoffCoordinates={dropoffCoordinates}
+            />
+            <RideContainer>
+                <RideSelector 
+                pickupCoordinates={pickupCoordinates}
+                dropoffCoordinates={dropoffCoordinates}
+                />
+                <ConfirmButtonContainer>
+                    <ConfirmButton>
+                    Confirm UberX
+                    </ConfirmButton>
+                </ConfirmButtonContainer>
+            </RideContainer>
+        </Wrapper>
+    )
 }
 
 export default Confirm
 
-const BackButton = tw.img`
-`
-
-const ButtonContainer = tw.div`
-rounded-full absolute top-4 left-4 z-10 bg-white shadow-md cursor-pointer
-`
-
-const ConfirmButton = tw.div`
-bg-black text-white my-4 mx-4 py-4 text-center text-xl
-`
-
-const ConfirmedButtonContainer = tw.div`
-border-t-2
-
+const Wrapper = tw.div`
+flex h-screen flex-col
 `
 
 const RideContainer = tw.div`
 flex-1 flex flex-col h-1/2
 `
 
-const Wrapper = tw.div`
-flex h-screen flex-col
+const ConfirmButtonContainer = tw.div`
+border-t-2
+`
+
+const ConfirmButton = tw.div`
+bg-black text-white text-center my-4 mx-4 py-4 text-xl
+`
+
+const ButtonContainer = tw.div`
+rounded-full absolute top-4 left-4 z-10 bg-white shadow-md cursor-pointer
+`
+
+const BackButton = tw.img`
+h-full object-contain
 `
 
 
