@@ -2,10 +2,13 @@ import {useState} from 'react'
 import tw from "tailwind-styled-components"
 import Link from 'next/link'
 
+import mapboxgl from '!mapbox-gl';
+
 const Search = () => {
 
     const [pickup, setPickup] = useState("");
     const [dropoff, setDropoff] = useState("");
+    
 
     return (
         <Wrapper>
@@ -25,7 +28,16 @@ const Search = () => {
                         placeholder='Enter pickup location'
                         value={pickup}
                         onChange={(e)=> setPickup(e.target.value)}
+                        
+                        
                     />
+
+                    
+                    
+                    
+
+
+
                     <Input 
                         placeholder='Where to?'
                         value={dropoff}
